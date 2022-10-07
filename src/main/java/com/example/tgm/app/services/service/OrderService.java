@@ -1,5 +1,6 @@
 package com.example.tgm.app.services.service;
 
+import com.example.tgm.app.exceprions.NotFoundException;
 import com.example.tgm.app.model.dto.OrderDto;
 import com.example.tgm.app.model.dto.ProductDto;
 import com.example.tgm.app.model.entity.Order;
@@ -31,42 +32,19 @@ public class OrderService {
     public List<Order> getAll() {
         return orderRepo.findAll();
     }
+    public Order orderGetById(Long id){
+        return orderRepo.findById(id).orElseThrow(() -> new NotFoundException("Произошла ошибка сервера! Не удалось найти заказ по заданному ID"));
+
+    }
 
     public void saveOrder(Order order){
         orderRepo.save(order);
     }
-
-
-    public void createOrder(OrderDto orderDto) throws TelegramApiException {
-        Order model = new Order();
-        model.setFirstName(orderDto.getFirstName());
-        model.setCity(orderDto.getCity());
-        model.setHouse(orderDto.getHouse());
-        model.setOther(orderDto.getOther());
-        model.setPerson(orderDto.getPerson());
-        model.setPhoneNumber(orderDto.getPhoneNumber());
-        model.setStreet(orderDto.getStreet());
-        model.setDelivery("Какая-то доставка!");
-        if (orderDto.getDelivery().equals("delivery")) {
-            model.setDelivery("Доставка");
-        } else {
-            model.setDelivery("Самовывоз");
-        }
-        orderRepo.save(model);
-
-
-
-
-        for (ProductDto a : orderDto.getProducts()){
-            ProductInOrder productInOrder = new ProductInOrder();
-            productInOrder.setProducts(productService.getById(a.getId()));
-            productInOrder.setProdCount(a.getCount());
-            productInOrder.setOrders(model);
-
-            productInOrderService.saveProdInOrder(productInOrder);
-            telegramService.toMessage(model);
-        }
-
-
+    public long saveOrderAndGetId(Order order){
+        Order orderCreate = orderRepo.save(order);
+        return orderCreate.getId();
     }
+
+
+
 }

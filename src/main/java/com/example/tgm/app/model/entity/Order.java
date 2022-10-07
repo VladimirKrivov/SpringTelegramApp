@@ -14,14 +14,12 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "order_user_name")
     private String firstName;
     @Column(name = "order_phone")
     private String phoneNumber;
-    @Column(name = "order_delivery_type")
-    private String delivery;
     @Column(name = "order_city")
     private String city;
     @Column(name = "order_street")
@@ -33,8 +31,9 @@ public class Order {
     @Column(name = "order_other")
     private String other;
 
-
-    @OneToMany(mappedBy = "orders")
+    @OneToOne
+    private Delivery delivery;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orders", cascade = CascadeType.REMOVE)
     List<ProductInOrder> RegistrationOrder;
 
 

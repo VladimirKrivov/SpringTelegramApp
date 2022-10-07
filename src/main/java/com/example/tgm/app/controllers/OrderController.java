@@ -1,14 +1,13 @@
 package com.example.tgm.app.controllers;
 
 
-import com.example.tgm.app.model.dto.OrderDto;
+import com.example.tgm.app.model.dto.CreateOrderDto;
+import com.example.tgm.app.services.service.CreateOrderService;
 import com.example.tgm.app.services.service.OrderService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
 
 @Data
 @RestController
@@ -16,9 +15,11 @@ import java.util.Arrays;
 @Slf4j
 public class OrderController {
     private final OrderService orderService;
+    private final CreateOrderService createOrderService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, CreateOrderService createOrderService) {
         this.orderService = orderService;
+        this.createOrderService = createOrderService;
     }
 
     @GetMapping("/order/all")
@@ -31,10 +32,10 @@ public class OrderController {
     }
 
     @PostMapping("/order/create-order")
-    public ResponseEntity createNewOrder(@RequestBody OrderDto orderDto) {
+    public ResponseEntity createNewOrder(@RequestBody CreateOrderDto orderDto) {
 
         try {
-            orderService.createOrder(orderDto);
+            createOrderService.createOrder(orderDto);
             return ResponseEntity.ok("Продукт сохранен");
         } catch (Exception e) {
             log.info("Неудалось совершить заказ");

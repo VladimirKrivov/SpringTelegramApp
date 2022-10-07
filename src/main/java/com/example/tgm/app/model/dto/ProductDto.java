@@ -5,10 +5,7 @@ import com.example.tgm.app.model.entity.Product;
 import lombok.Data;
 
 import javax.persistence.Lob;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 public class ProductDto {
