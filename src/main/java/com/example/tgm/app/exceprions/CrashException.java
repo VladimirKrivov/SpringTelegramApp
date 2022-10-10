@@ -8,4 +8,8 @@ public class CrashException extends RuntimeException{
     public CrashException(){
         super();
     }
+
+    public CrashException(String message){
+        super(message);
+    }
 }

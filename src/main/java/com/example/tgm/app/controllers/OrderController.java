@@ -1,6 +1,7 @@
 package com.example.tgm.app.controllers;
 
 
+import com.example.tgm.app.exceprions.CrashException;
 import com.example.tgm.app.model.dto.CreateOrderDto;
 import com.example.tgm.app.services.service.CreateOrderService;
 import com.example.tgm.app.services.service.OrderService;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Data
 @RestController
-@CrossOrigin("*")
 @Slf4j
 public class OrderController {
     private final OrderService orderService;
@@ -32,14 +32,16 @@ public class OrderController {
     }
 
     @PostMapping("/order/create-order")
-    public ResponseEntity createNewOrder(@RequestBody CreateOrderDto orderDto) {
+    public ResponseEntity<String> createNewOrder(@RequestBody CreateOrderDto orderDto) {
 
         try {
             createOrderService.createOrder(orderDto);
-            return ResponseEntity.ok("Продукт сохранен");
+            return ResponseEntity.ok("Заказ сохранен");
+        } catch (CrashException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {
             log.info("Неудалось совершить заказ");
-            return ResponseEntity.badRequest().body(orderDto);
+            return ResponseEntity.badRequest().body("Ошибка сервера");
         }
     }
 

@@ -29,7 +29,7 @@ public class CreateOrderService {
             allPrice += (price * prod.getCount());
         }
         if (allPrice != create.getAllPrice()) {
-            throw new CrashException();
+            throw new CrashException("Ошибка на сервере. Попробуйте позже");
         } else {
             Order model = new Order();
             model.setFirstName(create.getFirstName());

@@ -1,7 +1,5 @@
 package com.example.tgm.app.model.entity;
 
-import com.example.tgm.app.allTest.testEntity.TestOrder;
-import com.example.tgm.app.allTest.testEntity.TestProduct;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 

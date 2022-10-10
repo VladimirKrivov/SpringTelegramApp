@@ -13,7 +13,6 @@ import java.util.List;
 
 @Data
 @RestController
-@CrossOrigin("*")
 public class CategoryController {
 
     private final CategoryService categoryService;

@@ -1,6 +1,5 @@
 package com.example.tgm.app.services.service;
 
-import com.example.tgm.app.allTest.testEntity.TestProduct;
 import com.example.tgm.app.model.entity.Product;
 import com.example.tgm.app.services.repositories.ProductRepositories;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +18,11 @@ public class ProductService {
         this.productRepo = productRepo;
     }
 
-    public List<Product> listProduct(){
+    public List<Product> listProduct() {
         return productRepo.findAll();
     }
 
-    public Product getById(Long id){
+    public Product getById(Long id) {
         log.info("Поиск по следующему id: {}", id);
         return productRepo.findById(id).orElseThrow(NotFoundException::new);
 
